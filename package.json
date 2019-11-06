@@ -1,0 +1,31 @@
+{
+  "name": "webpack4",
+  "version": "1.0.0",
+  "description": "webpack4 ",
+  "main": "index.js",
+  "scripts": {
+    "bundle": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2hangJing/webpack4.git"
+  },
+  "author": "zhangjing",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/2hangJing/webpack4/issues"
+  },
+  "homepage": "https://github.com/2hangJing/webpack4#readme",
+  "devDependencies": {
+    "autoprefixer": "^9.7.1",
+    "css-loader": "^3.2.0",
+    "file-loader": "^4.2.0",
+    "node-sass": "^4.13.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.0.0",
+    "url-loader": "^2.2.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  }
+}
