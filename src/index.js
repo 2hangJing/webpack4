@@ -3,7 +3,7 @@ import img from "./img/20191011 (33).png";
 import css from "./css/index.scss";
 
 
-document.querySelector("button").addEventListener("click", function(){
+document.querySelector(".add").addEventListener("click", function(){
 
     addInfo();
 
@@ -12,4 +12,4 @@ document.querySelector("button").addEventListener("click", function(){
 
     document.body.appendChild(dom_img);
 
-}, {once: true, capture: false, passive: true})
+}, {once: false, capture: false, passive: true})

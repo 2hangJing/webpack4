@@ -1,21 +1,28 @@
 //  CommonJS 语法
 const path = require('path');
+const htmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports= {
     mode: "none",
-    entry: "./src/index.js",
+    entry: {
+        add: "./src/index.js",
+        clear: "./src/reset.js"
+    },
     output: {
-        filename: 'bundle.js',
+        //  输出文件名称，对应 entry 的 key
+        filename: '[name].js',
+        publicPath: "./",
         path: path.resolve(__dirname, "dist")
     },
     module: {
         rules: [
             {
-                test: /\.svg$/,
+                test: /\.(svg|woff|woff2|eot|ttf|otf)$/,
                 use:[{
                     loader: "file-loader",
                     options: {
-                        outputPath: "img",
+                        outputPath: "font",
                         name: "[name].[ext]"
                     }
                 }]
@@ -37,10 +44,16 @@ module.exports= {
             },{
                 test: /\.scss$/,
                 use:[
-                    {loader: "style-loader",options:{ injectType: 'styleTag' }},
-                    {loader: "css-loader"},
-                    {loader: "sass-loader"},
+                    {loader: "style-loader", options:{ injectType: 'styleTag' }},
+                    {
+                        loader: "css-loader", 
+                        //  代表scss 解析到内置 @import 的其他scss时会再从头走一遍 loader
+                        options:{ importLoaders: 2 } 
+                    },
+                    //  postcss 需要在 cssloader 之前嗲调用
                     {loader: "postcss-loader"},
+                    {loader: "sass-loader"},
+                    
                 ]
             },{
                 test: /\.css$/,
@@ -51,13 +64,30 @@ module.exports= {
                         options: {
                             outputPath: "css",
                             name: "[name].[ext]",
-                            publicPath: path.resolve(__dirname, "dist", "css"),
+                            // publicPath: path.resolve(__dirname, "dist", "css"),
                         }
                     }
                 ]
             }
         ]
-    }
+    },
+    plugins: [
+        new CleanWebpackPlugin({
+            verbose: true
+        }),
+        //  具体参数链接： https://juejin.im/post/5ce96ad7e51d455a2f2201e1
+        new htmlWebpackPlugin({
+            title: "webpack4",
+            template: "./src/index.html",
+            inject: "body",
+            favicon: "./src/img/favicon.ico",
+            meta: {
+                viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
+                'theme-color': "#2ebaae"
+            },
+            minify: true
+        })
+    ]
 }
 
 //  ES6 模块语法
