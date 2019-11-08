@@ -13,3 +13,11 @@ document.querySelector(".add").addEventListener("click", function(){
     document.body.appendChild(dom_img);
 
 }, {once: false, capture: false, passive: true})
+
+// HMR
+if (module.hot) {
+    module.hot.accept('./js/content.js', function() {
+        addInfo()
+        console.log('Accepting the updated printMe module!');
+    })
+}
