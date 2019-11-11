@@ -3,13 +3,14 @@ const path = require('path');
 const htmlWebpackPlugin = require("html-webpack-plugin");
 //  清空打包文件夹插件
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const webpackReload = require("./server/server-reload-websocket");
 const webpack = require('webpack');
 
 module.exports= {
     mode: "none",
     entry: {
-        add: ["./src/index.js", "webpack-hot-middleware/client"],
-        clear: ["./src/reset.js", "webpack-hot-middleware/client"]
+        add: ["./src/index.js"],
+        clear: ["./src/reset.js"]
     },
     output: {
         //  输出文件名称，对应 entry 的 key
@@ -41,8 +42,8 @@ module.exports= {
 
         //  开启 HMR
         //  HRM 链接 https://juejin.im/post/5c86ec276fb9a04a10301f5b#heading-5
-        // hot: true,
-        // hotOnly: true
+        hot: true,
+        hotOnly: true
     },
 
     module: {
@@ -88,20 +89,14 @@ module.exports= {
             },{
                 test: /\.css$/,
                 use:[
-                    {loader: "style-loader",options:{ injectType: 'linkTag' }},
-                    {
-                        loader: "file-loader",
-                        options: {
-                            outputPath: "css",
-                            name: "[name].[ext]",
-                            // publicPath: path.resolve(__dirname, "dist", "css"),
-                        }
-                    }
+                    {loader: "style-loader",options:{ injectType: 'styleTag' }},
+                    {loader: "css-loader"}
                 ]
             }
         ]
     },
     plugins: [
+        // new webpackReload(),
         new CleanWebpackPlugin({
             verbose: true
         }),

@@ -15,9 +15,9 @@ document.querySelector(".add").addEventListener("click", function(){
 }, {once: false, capture: false, passive: true})
 
 // HMR
-if (module.hot) {
-    module.hot.accept('./js/content.js', function() {
-        addInfo()
-        console.log('Accepting the updated printMe module!');
-    })
-}
+// if (module.hot) {
+//     module.hot.accept('./js/content.js', function() {
+//         addInfo()
+//         console.log('Accepting the updated printMe module!');
+//     })
+// }
