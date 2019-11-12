@@ -1,0 +1,34 @@
+{
+    "presets": [
+        [   
+            //  preset-env 只做 ES6 语法编译
+            //  @babel/plugin-transform-runtime 处理需要 polyfill 的ES6 API 
+
+            //  不使用 @babel/preset-env 的 corejs 做 polyfill 处理是因为 @babel/preset-env 会污染全局，
+            //  有可能与某个插件中自定义的 polyfill 冲突
+
+            //  @babel/preset-env 做 polyfill 处理需要安装 core-js@3 ||core-js@２　,对应 key corejs : 2 || 3 
+            "@babel/preset-env", 
+            {
+                //  ESmodules不做编译，后续 tree shaking等
+                "modules": false
+
+                // "corejs": 3
+            }
+        ]
+    ]
+    ,"plugins": [
+        [   
+            //  包含 polyfill，通过key corejs : 2 || 3 || false 开启关闭
+            //  corejs 2与3 区别在于 3 实现了实例化的API解析 eg: Array.from()
+            "@babel/plugin-transform-runtime",
+            {
+                "absoluteRuntime": false,
+                "corejs": 3,
+                "helpers": true,
+                "regenerator": true,
+                "useESModules": true
+            }
+        ]
+    ]
+}

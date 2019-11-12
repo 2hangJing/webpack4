@@ -10,7 +10,7 @@ module.exports= {
     mode: "none",
     entry: {
         add: ["./src/index.js"],
-        clear: ["./src/reset.js"]
+        reset: ["./src/reset.js"]
     },
     output: {
         //  输出文件名称，对应 entry 的 key
@@ -42,8 +42,8 @@ module.exports= {
 
         //  开启 HMR
         //  HRM 链接 https://juejin.im/post/5c86ec276fb9a04a10301f5b#heading-5
-        hot: true,
-        hotOnly: true
+        // hot: true,
+        // hotOnly: true
     },
 
     module: {
@@ -92,6 +92,12 @@ module.exports= {
                     {loader: "style-loader",options:{ injectType: 'styleTag' }},
                     {loader: "css-loader"}
                 ]
+            },
+
+            { 
+                test: /\.js$/, 
+                exclude: /node_modules/, 
+                loader: "babel-loader"
             }
         ]
     },

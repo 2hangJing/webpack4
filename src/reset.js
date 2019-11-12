@@ -1,7 +1,11 @@
+// import 'core-js/stable';
+// import 'regenerator-runtime/runtime';
 
-import clear from "./js/clear";
+var a = new Promise((resolve, reject)=>{
 
-document.querySelector(".clear").addEventListener("click", function(){
+    console.log(1111);
+});
 
-    clear();
-}, {once: false, capture: false, passive: true})
+
+console.log([1, 2, 3].includes(1))
+
