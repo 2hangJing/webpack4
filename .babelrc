@@ -1,4 +1,10 @@
 {
+
+    // 参考链接:
+    // https://juejin.im/post/5d076744f265da1b8b2b5ef4
+    // https://segmentfault.com/a/1190000020237817
+    // https://juejin.im/post/5d0373a95188251e1b5ebb6c#heading-1
+
     "presets": [
         [   
             //  preset-env 只做 ES6 语法编译
@@ -10,14 +16,16 @@
             //  @babel/preset-env 做 polyfill 处理需要安装 core-js@3 ||core-js@２　,对应 key corejs : 2 || 3 
             "@babel/preset-env", 
             {
-                //  ESmodules不做编译，后续 tree shaking等
+                //  是否将 ESmodule 转换为其他 模块规范。
+                //  后续 tree shaking 只支持 ESmodel，不做转换
                 "modules": false
 
                 // "corejs": 3
             }
         ]
     ]
-    ,"plugins": [
+    ,
+    "plugins": [
         [   
             //  包含 polyfill，通过key corejs : 2 || 3 || false 开启关闭
             //  corejs 2与3 区别在于 3 实现了实例化的API解析 eg: Array.from()
