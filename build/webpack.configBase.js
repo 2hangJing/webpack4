@@ -6,14 +6,14 @@ const htmlWebpackPlugin = require("html-webpack-plugin");
 module.exports= {
     mode: "none",
     entry: {
-        add: ["./src/index.js"],
-        reset: ["./src/reset.js"]
+        add: [path.resolve(__dirname, "../src/index.js")],
+        reset: [path.resolve(__dirname, "../src/reset.js")]
     },
     output: {
         //  输出文件名称，对应 entry 的 key
         filename: '[name].js',
         publicPath: "/",
-        path: path.resolve(__dirname, "dist")
+        path: path.resolve(__dirname, "../dist")
     },
     module: {
         rules: [
@@ -74,9 +74,9 @@ module.exports= {
         //  具体参数链接： https://juejin.im/post/5ce96ad7e51d455a2f2201e1
         new htmlWebpackPlugin({
             title: "webpack4",
-            template: "./src/index.html",
+            template: path.resolve(__dirname, "../src/index.html"),
             inject: "body",
-            favicon: "./src/img/favicon.ico",
+            favicon: path.resolve(__dirname, "../src/img/favicon.ico"),
             meta: {
                 viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
                 'theme-color': "#2ebaae"

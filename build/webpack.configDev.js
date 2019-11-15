@@ -2,7 +2,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const webpackReload = require("./server/server-reload-websocket");
+const webpackReload = require("../server/server-reload-websocket");
 
 module.exports= merge( require('./webpack.configBase.js'),{
     mode: "none",

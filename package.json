@@ -5,8 +5,8 @@
   "main": "index.js",
   "sideEffects": ["*.css","*.scss"],
   "scripts": {
-    "build": "webpack --config webpack.configBuild.js",
-    "dev": "webpack-dev-server --config webpack.configDev.js",
+    "build": "webpack --config ./build/webpack.configBuild.js",
+    "dev": "webpack-dev-server --config ./build/webpack.configDev.js",
     "serve": "node ./server/server.js"
   },
   "repository": {

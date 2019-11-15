@@ -3,7 +3,7 @@ const path = require('path');
 const htmlWebpackPlugin = require("html-webpack-plugin");
 //  清空打包文件夹插件
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const webpackReload = require("./server/server-reload-websocket");
+const webpackReload = require("../server/server-reload-websocket");
 const webpack = require('webpack');
 
 module.exports= {
