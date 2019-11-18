@@ -5,7 +5,7 @@ const merge = require('webpack-merge');
 const webpackReload = require("../server/server-reload-websocket");
 
 module.exports= merge( require('./webpack.configBase.js'),{
-    mode: "none",
+    mode: "development",
     //  eval==>通过eval()执行，不能正确显示行数  | cheap==>只显示错误代码行位置 
     //  inline==>source map被记录到打包JS文件中 | module==>可以捕获loader的报错 
     //  可以自由的与 source-map 组合，比如如下常用，开发与构建的配置
@@ -21,7 +21,7 @@ module.exports= merge( require('./webpack.configBase.js'),{
     devServer: {
         contentBase: path.resolve(__dirname, "dist"),
         //  控制台输出日志控制
-        clientLogLevel: "none",
+        clientLogLevel: "info",
         port: 8000,
         open: false,
         publicPath: "/",

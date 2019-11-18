@@ -1,4 +1,9 @@
 
+//  同步引入，测试代码分割
+import _ from "lodash";
+console.log("同步代码测试", _.join(['Hello', 'webpack'], ' '));
+
+
 import { fun } from "./js/reset.js";
 
 var a = new Promise((resolve, reject)=>{

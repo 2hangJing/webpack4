@@ -6,13 +6,14 @@ const htmlWebpackPlugin = require("html-webpack-plugin");
 module.exports= {
     mode: "none",
     entry: {
-        add: [path.resolve(__dirname, "../src/index.js")],
+        index: [path.resolve(__dirname, "../src/index.js")],
         reset: [path.resolve(__dirname, "../src/reset.js")]
     },
     output: {
         //  输出文件名称，对应 entry 的 key
         filename: '[name].js',
-        publicPath: "/",
+        chunkFilename: "[name].js",
+        publicPath: "./",
         path: path.resolve(__dirname, "../dist")
     },
     module: {
@@ -70,6 +71,7 @@ module.exports= {
             }
         ]
     },
+
     plugins: [
         //  具体参数链接： https://juejin.im/post/5ce96ad7e51d455a2f2201e1
         new htmlWebpackPlugin({

@@ -26,6 +26,10 @@
     ]
     ,
     "plugins": [
+        // 疑点，暂时没找到原因
+        // 代码分割动态 import 时需要安装得依赖，但是经过测试 webpack v4.41.2 没有安装此依赖依旧可以使用动态 import
+        // "@babel/plugin-syntax-dynamic-import",
+        
         [   
             //  包含 polyfill，通过key corejs : 2 || 3 || false 开启关闭
             //  corejs 2与3 区别在于 3 实现了实例化的API解析 eg: Array.from()
@@ -38,5 +42,6 @@
                 "useESModules": true
             }
         ]
+        
     ]
 }
