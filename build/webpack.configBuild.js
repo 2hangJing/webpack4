@@ -3,16 +3,71 @@ const path = require('path');
 const merge = require('webpack-merge');
 //  清空打包文件夹插件
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+//  CSS 代码分割
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+//  CSS 代码压缩
+const OptimizeCSSAssetsPlugin  = require("optimize-css-assets-webpack-plugin");
+
+//  webpack4内建 JS 压缩工具
+const TerserJSPlugin = require("terser-webpack-plugin");
 
 module.exports= merge(require("./webpack.configBase.js"), {
 
     mode: "production",
     // mode: "none",
-    
+
+    //  eval==>通过eval()执行，不能正确显示行数  | cheap==>只显示错误代码行位置 
+    //  inline==>source map被记录到打包JS文件中 | module==>可以捕获loader的报错 
+    //  可以自由的与 source-map 组合，比如如下常用，开发与构建的配置
+    //  development: cheap-module-eval-source-map
+    //  production:  cheap-module-source-map
+    devtool: "cheap-module-source-map",
+
+    output: {
+        //  入口文件输出名称，对应 entry 的 key
+        //  contenthash 根据内容产生 hash 未更改的JS 复用浏览器缓存
+        filename: '[name].[contenthash].js',
+        //  chunk文件输出名称
+        chunkFilename: 'chunk.[name].[contenthash].js',
+    },
+    module: {
+        rules:[
+            {
+                test: /\.scss$/,
+                use:[
+                    {loader: MiniCssExtractPlugin.loader},
+                    {
+                        loader: "css-loader", 
+                        //  代表scss 解析到内置 @import 的其他scss时会再从头走一遍 loader
+                        options:{ importLoaders: 2 } 
+                    },
+                    //  postcss 需要在 cssloader 之前嗲调用
+                    {loader: "postcss-loader"},
+                    {loader: "sass-loader"},
+                    
+                ]
+            },{
+                test: /\.css$/,
+                use:[
+                    {loader: MiniCssExtractPlugin.loader},
+                    {loader: "css-loader"}
+                ]
+            },
+        ]
+    },
     optimization: {
         //  TerserPlugin 压缩代码
         //  mode: "production" 默认开启
         minimize: true,
+
+        minimizer: [
+            //  因为复写 minimizer 需要手动加上 JS 压缩工具
+            new TerserJSPlugin({
+                sourceMap: true
+            }),
+            //  CSS 压缩工具 
+            new OptimizeCSSAssetsPlugin({})
+        ],
 
         //  usedExports 确定每个模块的已用导出，是 tree shaking 配置项
         //  tree shaking 只支持 ESmodule，bable中已配置使用 ES module导出
@@ -78,19 +133,17 @@ module.exports= merge(require("./webpack.configBase.js"), {
             }
         }
     },
-
-
-    //  eval==>通过eval()执行，不能正确显示行数  | cheap==>只显示错误代码行位置 
-    //  inline==>source map被记录到打包JS文件中 | module==>可以捕获loader的报错 
-    //  可以自由的与 source-map 组合，比如如下常用，开发与构建的配置
-    //  development: cheap-module-eval-source-map
-    //  production:  cheap-module-source-map
-    devtool: "cheap-module-source-map",
     plugins: [
 
         new CleanWebpackPlugin({
             //  删除日志写入控制台
             verbose: true
+        }),
+        new MiniCssExtractPlugin({
+            // Options similar to the same options in webpackOptions.output
+            // both options are optional
+            filename: "[name].css",
+            chunkFilename: "chunl.[name].css"
         })
     ]
 })

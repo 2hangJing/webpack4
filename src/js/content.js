@@ -1,4 +1,4 @@
-import "../css/cssLinkTag.css"
+import css from "../css/content.scss";
 
 export default function(){
     

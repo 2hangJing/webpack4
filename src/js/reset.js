@@ -1,3 +1,5 @@
+import css from "../css/reset.scss";
+
 export function fun(){
     
     let dom_name = document.querySelector(".name");

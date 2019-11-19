@@ -1,5 +1,6 @@
 
 import addInfo from "./js/content";
+import loadsh from './js/loadsh';
 import img from "./img/20191011 (33).png";
 import css from "./css/index.scss";
 
@@ -13,26 +14,17 @@ document.querySelector(".add").addEventListener("click", function(){
 
     document.body.appendChild(dom_img);
 
-}, {once: false, capture: false, passive: true});
-
-async function getLoadsh(){
-
-    const { default: _ } = await import(/* webpackChunkName: "lodash" */ 'lodash');
-
-    let s = _.join(['Hello', 'webpack'], ' ');
-
-    return s;
-}
-
-//  异步引入
-getLoadsh().then( str =>{
-
     const element = document.createElement('div');
 
-    element.innerHTML = str;
+    //  异步引入
+    loadsh().then(str=>{
 
-    document.body.appendChild(element);
-})
+        element.innerHTML = str;
+
+        document.body.appendChild(element);
+    });
+
+}, {once: false, capture: false, passive: true});
 
 
 // HMR

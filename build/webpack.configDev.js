@@ -13,6 +13,13 @@ module.exports= merge( require('./webpack.configBase.js'),{
     //  production:  cheap-module-source-map
     devtool: "cheap-module-eval-source-map",
 
+    output: {
+        //  入口文件输出名称，对应 entry 的 key
+        filename: '[name].js',
+        //  chunk文件输出名称
+        chunkFilename: 'chunk.[name].js',
+    },
+
     // watch 原理：https://segmentfault.com/a/1190000008111793
     watch: false,
     watchOptions: {
@@ -40,5 +47,30 @@ module.exports= merge( require('./webpack.configBase.js'),{
 
         // HMR
         // new webpack.HotModuleReplacementPlugin()
-    ]
+    ],
+    module: {
+        rules:[
+            {
+                test: /\.scss$/,
+                use:[
+                    {loader: "style-loader", options:{ injectType: 'styleTag' }},
+                    {
+                        loader: "css-loader", 
+                        //  代表scss 解析到内置 @import 的其他scss时会再从头走一遍 loader
+                        options:{ importLoaders: 2 } 
+                    },
+                    //  postcss 需要在 cssloader 之前嗲调用
+                    {loader: "postcss-loader"},
+                    {loader: "sass-loader"},
+                    
+                ]
+            },{
+                test: /\.css$/,
+                use:[
+                    {loader: "style-loader",options:{ injectType: 'styleTag' }},
+                    {loader: "css-loader"}
+                ]
+            },
+        ]
+    }
 })

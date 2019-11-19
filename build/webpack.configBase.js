@@ -1,7 +1,8 @@
 //  CommonJS 语法
 const path = require('path');
+const webpack = require('webpack');
 const htmlWebpackPlugin = require("html-webpack-plugin");
-
+const PreloadWebpackPlugin = require('preload-webpack-plugin');
 
 module.exports= {
     mode: "none",
@@ -10,9 +11,6 @@ module.exports= {
         reset: [path.resolve(__dirname, "../src/reset.js")]
     },
     output: {
-        //  输出文件名称，对应 entry 的 key
-        filename: '[name].js',
-        chunkFilename: "[name].js",
         publicPath: "./",
         path: path.resolve(__dirname, "../dist")
     },
@@ -42,26 +40,6 @@ module.exports= {
                         limit: 50*1024
                     }
                 }]
-            },{
-                test: /\.scss$/,
-                use:[
-                    {loader: "style-loader", options:{ injectType: 'styleTag' }},
-                    {
-                        loader: "css-loader", 
-                        //  代表scss 解析到内置 @import 的其他scss时会再从头走一遍 loader
-                        options:{ importLoaders: 2 } 
-                    },
-                    //  postcss 需要在 cssloader 之前嗲调用
-                    {loader: "postcss-loader"},
-                    {loader: "sass-loader"},
-                    
-                ]
-            },{
-                test: /\.css$/,
-                use:[
-                    {loader: "style-loader",options:{ injectType: 'styleTag' }},
-                    {loader: "css-loader"}
-                ]
             },{ 
                 test: /\.js$/, 
                 exclude: /node_modules/, 
@@ -84,6 +62,19 @@ module.exports= {
                 'theme-color': "#2ebaae"
             },
             minify: true
+        }),
+        //  异步chunk prefetch 加载优化 
+        //  webpack v4 需要安装 preload-webpack-plugin@next
+        //  链接：https://github.com/GoogleChromeLabs/preload-webpack-plugin
+        new PreloadWebpackPlugin({
+            rel: "prefetch",
+            as: "script"
+        }),
+
+        //  shimming 垫片配置项
+        //  https://webpack.docschina.org/guides/shimming/
+        new webpack.ProvidePlugin({
+            $: "jquery",
         })
     ]
 }
