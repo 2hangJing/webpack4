@@ -1,12 +1,17 @@
 //  CommonJS 语法
 const path = require('path');
 const merge = require('webpack-merge');
+const webpack = require('webpack');
 //  清空打包文件夹插件
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 //  CSS 代码分割
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 //  CSS 代码压缩
 const OptimizeCSSAssetsPlugin  = require("optimize-css-assets-webpack-plugin");
+//  静态文件引入html工具
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+//  gzip压缩
+const CompressionPlugin = require('compression-webpack-plugin');
 
 //  webpack4内建 JS 压缩工具
 const TerserJSPlugin = require("terser-webpack-plugin");
@@ -144,6 +149,24 @@ module.exports= merge(require("./webpack.configBase.js"), {
             // both options are optional
             filename: "[name].css",
             chunkFilename: "chunl.[name].css"
-        })
+        }),
+        // dllPlugin关联配置
+        new webpack.DllReferencePlugin({
+            
+            // dll过程生成的manifest文件
+            manifest: require(path.resolve(__dirname, "../static/dll/vendor-manifest.json"))
+        }),
+
+        new AddAssetHtmlPlugin([
+            {
+                // 要添加到编译中的文件的绝对路径，以及生成的HTML文件。支持globby字符串
+                filepath: require.resolve(path.resolve(__dirname, '../static/dll/vendor.js')),
+                publicPath: './dll',
+                outputPath: 'dll',
+                hash: true,
+            }
+        ]),
+        //  gzip 压缩
+        new CompressionPlugin()
     ]
 })

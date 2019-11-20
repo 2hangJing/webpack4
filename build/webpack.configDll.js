@@ -1,18 +1,18 @@
 //  CommonJS 语法
 const path = require('path');
 const webpack = require('webpack');
-const htmlWebpackPlugin = require("html-webpack-plugin");
-const PreloadWebpackPlugin = require('preload-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const merge = require('webpack-merge');
 
 module.exports= {
-    mode: "none",
+    mode: "production",
     entry: {
-        main: [path.resolve(__dirname, "../src/main.js")],
+        vendor: ['vue'],
     },
     output: {
         publicPath: "./",
-        path: path.resolve(__dirname, "../dist")
+        path: path.resolve(__dirname, "../static/dll"),
+        filename: '[name].js',
+        library: "[name]_[hash]"
     },
     module: {
         rules: [
@@ -50,38 +50,33 @@ module.exports= {
                 use: [{
                     loader: "babel-loader",
                 }]
-            }
+            },
+            {
+                test: /\.scss$/,
+                use:[
+                    {loader: "style-loader", options:{ injectType: 'styleTag' }},
+                    {
+                        loader: "css-loader", 
+                        //  代表scss 解析到内置 @import 的其他scss时会再从头走一遍 loader
+                        options:{ importLoaders: 2 } 
+                    },
+                    //  postcss 需要在 cssloader 之前嗲调用
+                    {loader: "postcss-loader"},
+                    {loader: "sass-loader"},
+                ]
+            },{
+                test: /\.css$/,
+                use:[
+                    {loader: "style-loader",options:{ injectType: 'styleTag' }},
+                    {loader: "css-loader"}
+                ]
+            },
         ]
     },
-
     plugins: [
-        //  具体参数链接： https://juejin.im/post/5ce96ad7e51d455a2f2201e1
-        new htmlWebpackPlugin({
-            title: "webpack4",
-            template: path.resolve(__dirname, "../static/index.html"),
-            inject: "body",
-            favicon: path.resolve(__dirname, "../src/img/favicon.ico"),
-            meta: {
-                viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
-                'theme-color': "#2ebaae"
-            },
-            minify: true
-        }),
-        //  异步chunk prefetch 加载优化 
-        //  webpack v4 需要安装 preload-webpack-plugin@next
-        //  链接：https://github.com/GoogleChromeLabs/preload-webpack-plugin
-        new PreloadWebpackPlugin({
-            rel: "prefetch",
-            as: "script"
-        }),
-
-        //  shimming 垫片配置项
-        //  https://webpack.docschina.org/guides/shimming/
-        new webpack.ProvidePlugin({
-            $: "jquery",
-        }),
-
-        //  vue plugin
-        new VueLoaderPlugin()
+        new webpack.DllPlugin({
+            path: path.join(__dirname, "../static/dll", "[name]-manifest.json"),
+            name: "[name]_[hash]"
+        })
     ]
 }
