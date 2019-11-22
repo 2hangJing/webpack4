@@ -18,10 +18,14 @@
                     age: 6
                 }
             };
-
-            console.log( obj?.woman?.name );
-
             // ?. 操作符
+            console.log( obj?.woman?.name );
+        
+            //  flat 操作符，扁平化数组
+            let arr = [1,2,3,[4,5,[6,7,8]]];
+
+            console.log( arr.flat(2) );
+            
         }
     }
 </script>
