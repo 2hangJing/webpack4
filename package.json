@@ -27,6 +27,7 @@
   "homepage": "https://github.com/2hangJing/webpack4#readme",
   "devDependencies": {
     "@babel/core": "^7.7.2",
+    "@babel/plugin-proposal-optional-chaining": "^7.6.0",
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/runtime-corejs3": "^7.7.2",

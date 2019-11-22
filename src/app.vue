@@ -10,7 +10,19 @@
         data() {
             return {}
         },
-        mounted() {}
+        mounted() {
+
+            let obj = {
+                man:{
+                    sex: 'man',
+                    age: 6
+                }
+            };
+
+            console.log( obj?.woman?.name );
+
+            // ?. 操作符
+        }
     }
 </script>
 <style lang='scss'>

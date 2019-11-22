@@ -41,7 +41,9 @@
                 "regenerator": true,
                 "useESModules": true
             }
-        ]
+        ],
+        //  ?. 操作符
+        "@babel/plugin-proposal-optional-chaining"
         
     ]
 }
