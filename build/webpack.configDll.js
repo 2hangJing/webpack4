@@ -6,7 +6,7 @@ const merge = require('webpack-merge');
 module.exports= {
     mode: "production",
     entry: {
-        vendor: ['vue'],
+        vendor: ['vue', 'axios', 'vue-router'],
     },
     output: {
         publicPath: "./",

@@ -33,6 +33,19 @@ module.exports= merge( require('./webpack.configBase.js'),{
         open: false,
         publicPath: "/",
         host: '0.0.0.0',
+        //  接口代理
+        // proxy 使用 http-proxy-middleware 包
+        // http-proxy-middleware 链接https://github.com/chimurai/http-proxy-middleware#options
+        proxy: {
+            '/api': {
+                target: 'https://www.ismoon.cn',
+                //  https 配置
+                secure: false,
+                //  防止接口配置防爬虫等，覆盖带的主机头来源
+                changeOrigin: true  
+            }
+        }
+        
 
         //  开启 HMR
         //  HRM 链接 https://juejin.im/post/5c86ec276fb9a04a10301f5b#heading-5
