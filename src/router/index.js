@@ -10,7 +10,7 @@ Vue.use(VueRouter);
 const routerList = [
     {
         path: '/',
-        component: () =>import('../template/home.vue')
+        component: () => import('../template/home.vue')
     },
     ...router_home
 ]

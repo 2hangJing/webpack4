@@ -14,10 +14,12 @@
             }
         },
         mounted() {
-            console.log( this.vuex );
+            
             this.$http.get('/api/web/article/list')
             .then( response =>{
                 console.log( response );
+
+                console.log( this.$store.commit('modify_VUEX_homeTitle', 'mutation 提交') );
             })
         }
     }
