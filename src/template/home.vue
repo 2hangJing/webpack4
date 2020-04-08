@@ -21,16 +21,6 @@
             }
         },
         mounted() {
-            this.jsHtml =  this.$hljs.highlight( 'javascript',`
-
-                    let a = [];
-                    a.__proto__ = Object.prototype;
-                    Object.prototype.toString.call(a)
-                    //  "[object Array]"
-
-                `
-            ).value
-
 
             this.$http.get('/api/web/article/list')
             .then( response =>{
@@ -44,14 +34,16 @@
                 console.log( this.value );
             },
             htmlCode(boolean, md){
-                // marked.setOptions({
-                //     highlight: function(code, lang, callback) {
-                //         require('pygmentize-bundled') ({ lang: lang, format: 'html' }, code, function (err, result) {
-                //         callback(err, result.toString());
-                //         });
-                //     }
-                // })
-                console.log( marked(md) );
+
+                let that = this;
+                marked.setOptions({
+                    highlight(code, lang, callback) {
+                        return that.$hljs.highlight('javascript', code).value
+                    }
+                })
+                let html = marked(md);
+                
+                this.jsHtml =  html;
                 
             }
         }

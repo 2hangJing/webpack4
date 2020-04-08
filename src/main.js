@@ -12,7 +12,7 @@ Vue.prototype.$hljs = hljs;
 //	css ex: font
 import './font/iconfont.css';
 import 'mavon-editor/dist/css/index.css';
-import 'highlight.js/styles/github.css';
+// import 'highlight.js/styles/github.css';
 
 
 // use
