@@ -38,7 +38,7 @@
                 let that = this;
                 marked.setOptions({
                     highlight(code, lang, callback) {
-                        return that.$hljs.highlight('javascript', code).value
+                        return that.$hljs.highlightAuto(code).value
                     }
                 })
                 let html = marked(md);

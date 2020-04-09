@@ -6,7 +6,9 @@ import axios 	from './httpClient/axios';
 import mavonEditor from 'mavon-editor';
 import hljs from 'highlight.js/lib/highlight';
 import javascript from 'highlight.js/lib/languages/javascript';
+import css from 'highlight.js/lib/languages/css';
 hljs.registerLanguage('javascript', javascript);
+hljs.registerLanguage('css', css);
 //	httpclient
 Vue.prototype.$hljs = hljs;
 //	css ex: font
