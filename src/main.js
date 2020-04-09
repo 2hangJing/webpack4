@@ -7,10 +7,13 @@ import mavonEditor from 'mavon-editor';
 import hljs from 'highlight.js/lib/highlight';
 import javascript from 'highlight.js/lib/languages/javascript';
 import css from 'highlight.js/lib/languages/css';
+
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('css', css);
-//	httpclient
+//	highlight 代码高亮
 Vue.prototype.$hljs = hljs;
+
+
 //	css ex: font
 import './font/iconfont.css';
 import 'mavon-editor/dist/css/index.css';
