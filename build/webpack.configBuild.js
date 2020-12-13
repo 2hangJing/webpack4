@@ -18,8 +18,8 @@ const TerserJSPlugin = require("terser-webpack-plugin");
 
 module.exports= merge(require("./webpack.configBase.js"), {
 
-    // mode: "production",
-    mode: "none",
+    mode: "production",
+    // mode: "none",
 
     //  eval==>通过eval()执行，不能正确显示行数  | cheap==>只显示错误代码行位置 
     //  inline==>source map被记录到打包JS文件中 | module==>可以捕获loader的报错 
@@ -173,6 +173,6 @@ module.exports= merge(require("./webpack.configBase.js"), {
             }
         ]),
         //  gzip 压缩
-        // new CompressionPlugin()
+        new CompressionPlugin()
     ]
 })
