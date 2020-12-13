@@ -18,8 +18,8 @@ const TerserJSPlugin = require("terser-webpack-plugin");
 
 module.exports= merge(require("./webpack.configBase.js"), {
 
-    mode: "production",
-    // mode: "none",
+    // mode: "production",
+    mode: "none",
 
     //  eval==>通过eval()执行，不能正确显示行数  | cheap==>只显示错误代码行位置 
     //  inline==>source map被记录到打包JS文件中 | module==>可以捕获loader的报错 
@@ -49,7 +49,12 @@ module.exports= merge(require("./webpack.configBase.js"), {
                     //  postcss 需要在 cssloader 之前嗲调用
                     {loader: "postcss-loader"},
                     {loader: "sass-loader"},
-                    
+                    {
+                        loader: 'sass-resources-loader',
+                        options: {
+                            resources: path.resolve(__dirname, "../src/scss/public.scss")
+                        }
+                    }
                 ]
             },{
                 test: /\.css$/,
@@ -71,7 +76,7 @@ module.exports= merge(require("./webpack.configBase.js"), {
                 sourceMap: true
             }),
             //  CSS 压缩工具 
-            new OptimizeCSSAssetsPlugin({})
+            new OptimizeCSSAssetsPlugin()
         ],
 
         //  usedExports 确定每个模块的已用导出，是 tree shaking 配置项
@@ -89,7 +94,7 @@ module.exports= merge(require("./webpack.configBase.js"), {
             chunks: "all",
 
             //  大于 30KB 得代码才会进行代码分割
-            minSize: 30000,
+            minSize: 30* 1024,
 
             //  对代码分割后大于 maxSize 得chunk 再次进行代码分割，一般不用配置，默认0
             maxSize: 0,
@@ -147,8 +152,8 @@ module.exports= merge(require("./webpack.configBase.js"), {
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
             // both options are optional
-            filename: "[name].css",
-            chunkFilename: "chunl.[name].css"
+            filename: "[name].[contenthash].css",
+            chunkFilename: "chunk.[name].[contenthash].css"
         }),
         // dllPlugin关联配置
         new webpack.DllReferencePlugin({
@@ -167,6 +172,6 @@ module.exports= merge(require("./webpack.configBase.js"), {
             }
         ]),
         //  gzip 压缩
-        new CompressionPlugin()
+        // new CompressionPlugin()
     ]
 })

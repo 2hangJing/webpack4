@@ -1,0 +1,13 @@
+.testPublic{
+    font-size: 25px;
+    color: #369;
+}
+.testPublic_other{
+    font-size: 25px;
+    color: #369;
+}
+
+$projectName : blue;
+@mixin bg() {
+    background-color: $projectName;
+}

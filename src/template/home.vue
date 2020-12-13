@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>{{ this.vuex.VUEX_homeTitle }}</h1>
+        <h1 class="homeH1 testPublic">{{ this.vuex.VUEX_homeTitle }}</h1>
         <p @click='showData'>显示输出数据</p>
         <div v-html='jsHtml'></div>
         <mavon-editor ref=md @save='save' @imgAdd="$imgAdd" v-model="value" />

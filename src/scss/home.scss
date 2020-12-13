@@ -1,0 +1,8 @@
+// @import './public.scss';
+.homeH1{
+    color: wheat;
+    @include bg();
+}
+.innerCSS{
+    font-size: 20px;
+}
