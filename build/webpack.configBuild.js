@@ -49,6 +49,7 @@ module.exports= merge(require("./webpack.configBase.js"), {
                     //  postcss 需要在 cssloader 之前嗲调用
                     {loader: "postcss-loader"},
                     {loader: "sass-loader"},
+                    //  公共变量、mixin 抽离
                     {
                         loader: 'sass-resources-loader',
                         options: {
